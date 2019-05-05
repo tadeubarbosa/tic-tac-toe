@@ -2,26 +2,30 @@
 const tic_tac_toe = {
 
     // ATTRIBUTES
-    board: ['','','','','','','','',''],
+    board: [
+        '', '', '',
+        '', '', '',
+        '', '', ''
+    ],
     symbols: {
-                options: ['O','X'],
-                turn_index: 0,
-                change(){
-                    this.turn_index = ( this.turn_index === 0 ? 1:0 );
-                }
-            },
+        options: ['O', 'X'],
+        turn_index: 0,
+        change() {
+            this.turn_index = (this.turn_index === 0 ? 1 : 0);
+        }
+    },
     container_element: null,
     gameover: false,
     winning_sequences: [
-                        [0,1,2],
-                        [3,4,5],
-                        [6,7,8],
-                        [0,3,6],
-                        [1,4,7],
-                        [2,5,8],
-                        [0,4,8],
-                        [2,4,6]
-                    ],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ],
 
     // FUNCTIONS
     init(container) {
@@ -36,7 +40,7 @@ const tic_tac_toe = {
         this.draw();
 
         const winning_sequences_index = this.check_winning_sequences(currentSymbol);
-        if (this.is_game_over()){
+        if (this.is_game_over()) {
             this.game_is_over();
         }
         if (winning_sequences_index >= 0) {
@@ -51,19 +55,19 @@ const tic_tac_toe = {
 
     stylize_winner_sequence(winner_sequence) {
         winner_sequence.forEach((position) => {
-          this
-            .container_element
-            .querySelector(`div:nth-child(${position + 1})`)
-            .classList.add('winner');
+            this
+                .container_element
+                .querySelector(`div:nth-child(${position + 1})`)
+                .classList.add('winner');
         });
-      },
+    },
 
     check_winning_sequences(symbol) {
 
-        for ( i in this.winning_sequences ) {
-            if (this.board[ this.winning_sequences[i][0] ] == symbol  &&
-                this.board[ this.winning_sequences[i][1] ] == symbol &&
-                this.board[ this.winning_sequences[i][2] ] == symbol) {
+        for (i in this.winning_sequences) {
+            if (this.board[this.winning_sequences[i][0]] == symbol &&
+                this.board[this.winning_sequences[i][1]] == symbol &&
+                this.board[this.winning_sequences[i][2]] == symbol) {
                 console.log('winning sequences INDEX:' + i);
                 return i;
             }
@@ -83,7 +87,7 @@ const tic_tac_toe = {
     start() {
         this.board.fill('');
         this.draw();
-        this.gameover = false;       
+        this.gameover = false;
     },
 
     restart() {
