@@ -27,6 +27,49 @@ const tic_tac_toe = {
         [2, 4, 6]
     ],
 
+    bot: {
+        playing: true,
+        play(_self) {
+            _self.bot.steps.two_houses_in_a_row(_self);
+        },
+        steps: {
+            two_houses_in_a_row(_self) {
+                const index = _self.symbols.turn_index;
+                const enemy_index = index === 1 ? 0 : 1;
+                const enemy_symbol = _self.symbols.options[enemy_index];
+                const board = _self.board;
+                const sequences = _self.winning_sequences;
+                let played = false;
+                //
+                for (i in sequences) {
+                    const sequence = sequences[i];
+                    let count = 0;
+                    let empty_card = null;
+                    for (x in sequence) {
+                        switch (board[sequence[x]]) {
+                            case (enemy_symbol):
+                                count++;
+                                break;
+                            case (''):
+                                empty_card = sequence[x];
+                                break;
+                        }
+                    }
+                    if (count === 2) {
+                        setInterval(() => {
+                            _self.make_play(empty_card);
+                            played = true;
+                        }, 1000);
+                        break;
+                    }
+                };
+                if (played === false) {
+                    //
+                }
+            }
+        }
+    },
+
     // FUNCTIONS
     init(container) {
         this.container_element = container;
@@ -50,6 +93,8 @@ const tic_tac_toe = {
             this.symbols.change();
         }
 
+        if (this.bot.playing && this.symbols.turn_index === 1) this.bot.play(this);
+
         return true;
     },
 
@@ -72,6 +117,7 @@ const tic_tac_toe = {
                 return i;
             }
         };
+
         return -1;
     },
 
